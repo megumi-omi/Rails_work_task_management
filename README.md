@@ -1,11 +1,11 @@
-tabel_users
+users
 | column | type |
 | ---- | ---- |
 | name | string |
 | email | string |
 | password_digest | string |
 
-tabel_tasks
+tasks
 | column | type |
 | ---- | ---- |
 | content | text |
@@ -14,12 +14,12 @@ tabel_tasks
 | status | string |
 | user_id | bigint |
 
-tabel_labels
+labels
 | column | type |
 | ---- | ---- |
 | name | string |
 
-tabel_labelings
+labelings
 | column | type |
 | ---- | ---- |
 | task_id | bigint |
