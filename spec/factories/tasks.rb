@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    title { '学習' }
-    content { 'タイピング練習' }
+    title { 'test_title' }
+    content { 'test_content' }
   end
 end
