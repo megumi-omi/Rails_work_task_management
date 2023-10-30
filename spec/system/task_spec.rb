@@ -9,10 +9,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        FactoryBot.create(:task, title: 'タスク名')
+        FactoryBot.create(:task)
         visit tasks_path
-        binding.irb
-        expect(page).to have_content 'タスク名'
+        expect(page).to have_content 'Rubyテキスト'
       end
     end
   end
