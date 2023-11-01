@@ -1,6 +1,11 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @task = Task.all
+    if params[:sort_deadline] == true
+      sort_deadline = @task.sort.reverse
+    else
+      @tasks = Task.all.order(created_at: :desc)
+    end
   end
 
   def new
@@ -42,6 +47,10 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :sort_deadline)
   end
+
+  # def sort_deadline
+  #   params.require(:sort_deadline).permit("true")
+  # end
 end

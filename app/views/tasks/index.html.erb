@@ -3,14 +3,18 @@
 
 <table>
   <tr>
+    <th><%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %></tr>
+  <tr>
     <th>タスク名</th>
     <th>詳細</th>
+    <th>終了期限</th>
   </tr>
 
   <% @tasks.each do |task| %>
     <tr>
       <td class="task_row"><%= task.title %></td>
       <td class="task_row"><%= task.content %></td>
+      <td><%= task.deadline %></td>
       <td><%= link_to "詳細", task_path(task.id) %></td>
       <td><%= link_to "編集", edit_task_path(task.id) %></td>
       <td><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "本当に削除して良いですか？"} %></td>
