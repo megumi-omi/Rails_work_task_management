@@ -49,8 +49,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :content, :deadline)
   end
-
-  # def sort_deadline
-  #   params.require(:sort_deadline).permit("true")
-  # end
 end
