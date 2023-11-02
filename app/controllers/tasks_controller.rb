@@ -1,10 +1,14 @@
 class TasksController < ApplicationController
+
   def index
-    @tasks = Task.all
-    if params[:sort_deadline] == "true"
-      @tasks = Task.order(deadline: :desc)
-    else
-      @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all.order(created_at: :desc)
+    # 終了期限のソート
+    if params[:sort_deadline]
+      @tasks = @tasks.order(deadline: :desc)
+    end
+    # タイトル検索
+    if params[:task].present?
+      @tasks = @tasks.where("title LIKE ?", "%" + params[:task][:title] + "%" )
     end
   end
 

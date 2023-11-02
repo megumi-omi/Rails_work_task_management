@@ -8,7 +8,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'task[content]', with: '詳細1'
         fill_in 'task[deadline]', with: DateTime
         click_on '登録する'
-        expect(page).to have_content 'タスク1'#, DateTime       
+        expect(page).to have_content 'タスク1'       
       end
     end
   end

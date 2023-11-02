@@ -3,6 +3,8 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :content, presence: true
+  
+  # scope :
 
   private
   def set_default_deadline
