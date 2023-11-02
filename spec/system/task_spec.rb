@@ -30,6 +30,16 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[0]).to have_content 'task3'
       end
     end
+    context '終了期限でソートするというリンクを押した場合' do
+      it '終了期限の降順に並び替える' do
+        FactoryBot.create(:task, deadline: '2023/11/1')
+        FactoryBot.create(:task, deadline: '2023/12/1')
+        FactoryBot.create(:task, deadline: '2024/1/1')
+        visit tasks_path
+        task_list = all('.task_row')
+        expect(task_list[2]).to have_content '2024-01-01'
+      end
+    end        
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do

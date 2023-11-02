@@ -14,7 +14,7 @@
     <tr>
       <td class="task_row"><%= task.title %></td>
       <td class="task_row"><%= task.content %></td>
-      <td><%= task.deadline %></td>
+      <td class="task_row"><%= task.deadline %></td>
       <td><%= link_to "詳細", task_path(task.id) %></td>
       <td><%= link_to "編集", edit_task_path(task.id) %></td>
       <td><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "本当に削除して良いですか？"} %></td>
