@@ -18,9 +18,13 @@
     <%= form.label :詳細 %>
     <%= form.text_field :content %>
   </div>
+  <div class="task_status">
+    <%= form.label :ステータス %>
+    <%= form.select :status, ["未着手", "着手中", "完了"] %>
+  </div>
   <div class="task_deadline">
-  <%= form.label :終了期限 %>
-  <%= form.date_field :deadline %>
+    <%= form.label :終了期限 %>
+    <%= form.date_field :deadline %>
   </div>
   <%= form.submit %>
 <% end %>

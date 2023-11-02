@@ -7,6 +7,7 @@
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
+    <th>ステータス</th>
     <th>終了期限</th>
   </tr>
 
@@ -14,6 +15,7 @@
     <tr>
       <td class="task_row"><%= task.title %></td>
       <td class="task_row"><%= task.content %></td>
+      <td class="task_row"><%= task.status %></td>
       <td class="task_row"><%= task.deadline %></td>
       <td><%= link_to "詳細", task_path(task.id) %></td>
       <td><%= link_to "編集", edit_task_path(task.id) %></td>
