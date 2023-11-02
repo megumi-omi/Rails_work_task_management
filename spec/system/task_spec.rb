@@ -6,8 +6,9 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'task[title]', with: 'タスク1'
         fill_in 'task[content]', with: '詳細1'
+        fill_in 'task[deadline]', with: DateTime
         click_on '登録する'
-        expect(page).to have_content 'タスク1'       
+        expect(page).to have_content 'タスク1'#, DateTime       
       end
     end
   end
