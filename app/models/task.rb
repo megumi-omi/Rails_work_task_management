@@ -9,7 +9,8 @@ class Task < ApplicationRecord
     working: 1, #着手
     completed: 2 #完了
   }
-  # scope :
+  scope :search_title, -> (title) {where("title LIKE ?", "%" + title + "%" )}
+  scope :search_status, ->(status) {where(status: status)}
 
   private
   def set_default_deadline

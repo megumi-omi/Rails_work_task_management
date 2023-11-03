@@ -6,19 +6,10 @@ class TasksController < ApplicationController
     if params[:sort_deadline]
       @tasks = @tasks.order(deadline: :desc)
     end
-    # タイトル検索
+    # タイトル/ステータス検索
     if params[:task].present?
-      #もしパラメータがタイトルとステータス両方だったとき
-      if params[:task][:title] && params[:task][:status].present?
-        @tasks = @tasks.where("title LIKE ?", "%" + params[:task][:title] + "%" ).
-                        where(status: params[:task][:status])
-      #もし渡されたパラメータがタイトルのみだったとき（実装途中）
-      elsif params[:task][:title]
-        @tasks = @tasks.where("title LIKE ?", "%" + params[:task][:title] + "%" )
-      #もし渡されたパラメータがステータスのみだったとき
-      else params[:task][:status]
-        @tasks = @tasks.where(status: params[:task][:status])
-      end
+      @tasks = @tasks.search_title(params[:task][:title]) if params[:task][:title].present?
+      @tasks = @tasks.search_status(params[:task][:status]) if params[:task][:status].present?
     end
   end
 
