@@ -76,6 +76,14 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タイトルとステータスで検索した場合' do
       it '該当のタイトルとステータスのタスクが表示される' do
+        FactoryBot.create(:task, title: 'task1', status: 'completed')
+        FactoryBot.create(:task, title: 'task2', status: 'working')
+        FactoryBot.create(:task, title: 'task3', status: 'waiting')
+        visit tasks_path
+        fill_in 'task[title]', with: 'task3'
+        select 'waiting', from: 'task[status]'
+        click_on '検索'
+        expect(page).to have_content 'task3'
       end
     end
   end
