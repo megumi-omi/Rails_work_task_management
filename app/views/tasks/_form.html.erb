@@ -20,7 +20,7 @@
   </div>
   <div class="task_status">
     <%= form.label :ステータス %>
-    <%= form.select :status, ["未着手", "着手中", "完了"] %>
+    <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください' }, include_blank: true %>
   </div>
   <div class="task_deadline">
     <%= form.label :終了期限 %>

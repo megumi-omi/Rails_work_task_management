@@ -8,7 +8,17 @@ class TasksController < ApplicationController
     end
     # タイトル検索
     if params[:task].present?
-      @tasks = @tasks.where("title LIKE ?", "%" + params[:task][:title] + "%" )
+      #もしパラメータがタイトルとステータス両方だったとき
+      if params[:task][:title] && params[:task][:status].present?
+        @tasks = @tasks.where("title LIKE ?", "%" + params[:task][:title] + "%" ).
+                        where(status: params[:task][:status])
+      #もし渡されたパラメータがタイトルのみだったとき（実装途中）
+      elsif params[:task][:title]
+        @tasks = @tasks.where("title LIKE ?", "%" + params[:task][:title] + "%" )
+      #もし渡されたパラメータがステータスのみだったとき
+      else params[:task][:status]
+        @tasks = @tasks.where(status: params[:task][:status])
+      end
     end
   end
 
