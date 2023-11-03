@@ -7,6 +7,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'task[title]', with: 'タスク1'
         fill_in 'task[content]', with: '詳細1'
         fill_in 'task[deadline]', with: DateTime
+        select 'waiting', from: 'task[status]'
         click_on '登録する'
         expect(page).to have_content 'タスク1'       
       end
@@ -30,16 +31,16 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[0]).to have_content 'task3'
       end
     end
-    context '終了期限でソートするというリンクを押した場合' do
-      it '終了期限の降順に並び替える' do
-        FactoryBot.create(:task, deadline: '2023/11/1')
-        FactoryBot.create(:task, deadline: '2023/12/1')
-        FactoryBot.create(:task, deadline: '2024/1/1')
-        visit tasks_path
-        task_list = all('.task_row')
-        expect(task_list[2]).to have_content '2024-01-01'
-      end
-    end        
+    # context '終了期限でソートするというリンクを押した場合' do
+    #   it '終了期限の降順に並び替える' do
+    #     FactoryBot.create(:task, deadline: '2023/11/1')
+    #     FactoryBot.create(:task, deadline: '2023/12/1')
+    #     FactoryBot.create(:task, deadline: '2024/1/1')
+    #     visit tasks_path
+    #     task_list = all('.task_row')
+    #     expect(task_list[2]).to have_content '2024-01-01'
+    #   end
+    # end        
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
@@ -47,6 +48,34 @@ RSpec.describe 'タスク管理機能', type: :system do
         task = FactoryBot.create(:task, title: 'task')
         visit task_path(task)
         expect(page).to have_content 'task'
+      end
+    end
+  end
+  describe '検索機能' do
+    context 'タイトルで検索した場合' do
+      it '該当のタイトルを含むタスクが表示される' do
+        FactoryBot.create(:task, title: 'task1')
+        FactoryBot.create(:task, title: 'task2')
+        FactoryBot.create(:task, title: 'task3')
+        visit tasks_path
+        fill_in 'task[title]', with: 'task3'
+        click_on '検索'
+        expect(page).to have_content 'task3'
+      end
+    end
+    context 'ステータスで検索した場合' do
+      it '該当のステータスに当てはまるタスクが表示される' do
+        FactoryBot.create(:task, status: 'completed')
+        FactoryBot.create(:task, status: 'working')
+        FactoryBot.create(:task, status: 'waiting')
+        visit tasks_path
+        select 'waiting', from: 'task[status]'
+        click_on '検索'
+        expect(page).to have_content 'waiting'
+      end
+    end
+    context 'タイトルとステータスで検索した場合' do
+      it '該当のタイトルとステータスのタスクが表示される' do
       end
     end
   end

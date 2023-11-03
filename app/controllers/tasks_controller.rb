@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all 
     # 終了期限のソート
     if params[:sort_deadline]
       @tasks = @tasks.order(deadline: :desc)
+    else
+      @tasks = @tasks.order(created_at: :desc)
     end
     # タイトル/ステータス検索
     if params[:task].present?
