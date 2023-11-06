@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
 
   def index
-    @tasks = Task.all 
-    # 終了期限のソート
+    @tasks = Task.page(params[:page]).per(5) 
+    # #終了期限のソート
     # if params[:sort_deadline]
     #   @tasks = @tasks.order(deadline: :desc)
     # else
