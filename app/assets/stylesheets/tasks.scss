@@ -1,3 +1,23 @@
 // Place all the styles related to the tasks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.page-item{
+  list-style-type: none;
+  float: left;
+  margin-right: 8px;
+}
+table, th, td {
+  border-bottom: 1px solid rgb(196, 196, 196);
+  border-top: 1px solid rgb(196, 196, 196);
+}
+table{
+  width: 100%;
+}
+h1{
+  font-size: 30px;
+}
+.header{
+  background-color: rgb(248, 239, 239);
+  padding: 10px;
+}

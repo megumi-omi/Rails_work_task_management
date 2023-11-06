@@ -1,35 +1,38 @@
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
 
+<%= form_with scope: :task, url: tasks_path, method: :get, local: true do |form| %>
+  <%= form.label :タスク名 %>
+  <%= form.text_field :title %>
+  <%= form.label :ステータス %>
+  <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください' }, include_blank: true %>
+  <%= form.submit '検索' %>
+<% end %>
+
+<br>
+<%= link_to "新規登録", new_task_path, class: "btn btn-info btn-sm" %>
+
 <table>
   <tr>
-    <%= form_with scope: :task, url: tasks_path, method: :get, local: true do |form| %>
-      <%= form.text_field :title %>
-      <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください' }, include_blank: true %>
-      <%= form.submit '検索' %>
-    <% end %>
-    </tr>
-  <tr>
-    <th><%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %></tr>
-    <th><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></tr>
-  <tr>
-    <th>タスク名</th>
-    <th>詳細</th>
-    <th>ステータス</th>
-    <th>優先順位</th>
-    <th>終了期限</th>
+    <div class="task_table">
+      <th>タスク名</th>
+      <th>詳細</th>
+      <th><%= link_to "終了期限▼", tasks_path(sort_deadline: "true") %></th>
+      <th>ステータス</th>
+      <th><%= link_to "優先順位▼", tasks_path(sort_priority: "true") %></th>
+    </div>
   </tr>
-
+  <br>
   <% @tasks.each do |task| %>
     <tr>
       <td class="task_row_title"><%= task.title %></td>
       <td class="task_row"><%= task.content %></td>
+      <td class="task_row"><%= task.deadline %></td>
       <td class="task_row"><%= task.status %></td>
       <td class="task_row_priority"><%= task.priority %></td>
-      <td class="task_row"><%= task.deadline %></td>
-      <td><%= link_to "詳細", task_path(task.id) %></td>
-      <td><%= link_to "編集", edit_task_path(task.id) %></td>
-      <td><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "本当に削除して良いですか？"} %></td>
+      <td><%= link_to "詳細", task_path(task.id), class: "btn btn-primary btn-sm" %></td>
+      <td><%= link_to "編集", edit_task_path(task.id), class:"btn btn-success btn-sm" %></td>
+      <td><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "本当に削除して良いですか？"}, class: "btn btn-danger btn-sm" %></td>
     </tr>
   <% end %>
   </table>
