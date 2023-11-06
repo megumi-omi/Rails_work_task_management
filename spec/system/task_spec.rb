@@ -27,8 +27,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, title: 'task2')
         FactoryBot.create(:task, title: 'task3')
         visit tasks_path
-        task_list = all('.task_row')
-        expect(task_list[0]).to have_content 'task3'
+        task_list = all('.task_row_title')
+        expect(task_list[2]).to have_content 'task3'
       end
     end
     # context '終了期限でソートするというリンクを押した場合' do
@@ -40,7 +40,18 @@ RSpec.describe 'タスク管理機能', type: :system do
     #     task_list = all('.task_row')
     #     expect(task_list[2]).to have_content '2024-01-01'
     #   end
-    # end        
+    # end
+    context '優先順位でソートするというリンクを押した場合' do
+      it '優先順位を降順で並び替える' do
+        FactoryBot.create(:task, priority: 'high')
+        FactoryBot.create(:task, priority: 'medium')
+        FactoryBot.create(:task, priority: 'low')
+        visit tasks_path
+        click_on '優先順位でソートする'
+        task_list = all('.task_row_priority')
+        expect(task_list[0]).to have_content 'high'
+      end
+    end          
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
