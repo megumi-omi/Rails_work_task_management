@@ -11,10 +11,12 @@
     </tr>
   <tr>
     <th><%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %></tr>
+    <th><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></tr>
   <tr>
     <th>タスク名</th>
     <th>詳細</th>
     <th>ステータス</th>
+    <th>優先順位</th>
     <th>終了期限</th>
   </tr>
 
@@ -23,6 +25,7 @@
       <td class="task_row"><%= task.title %></td>
       <td class="task_row"><%= task.content %></td>
       <td class="task_row"><%= task.status %></td>
+      <td class="task_row"><%= task.priority %></td>
       <td class="task_row"><%= task.deadline %></td>
       <td><%= link_to "詳細", task_path(task.id) %></td>
       <td><%= link_to "編集", edit_task_path(task.id) %></td>

@@ -8,6 +8,10 @@ class TasksController < ApplicationController
     else
       @tasks = @tasks.order(created_at: :desc)
     end
+    # 優先順位のソート
+    if params[:sort_priority]
+      @tasks = @tasks.order(priority: :desc)
+    end
     # タイトル/ステータス検索
     if params[:task].present?
       @tasks = @tasks.search_title(params[:task][:title]) if params[:task][:title].present?
@@ -54,6 +58,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status)
+    params.require(:task).permit(:title, :content, :deadline, :status, :priority)
   end
 end

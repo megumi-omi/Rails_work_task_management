@@ -22,6 +22,10 @@
     <%= form.label :ステータス %>
     <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください' }, include_blank: true %>
   </div>
+  <div class="task_priority">
+    <%= form.label :優先度 %>
+    <%= form.select :priority, Task.priorities.keys.to_a, { include_blank: '選択してください' }, include_blank: true %>
+  </div>
   <div class="task_deadline">
     <%= form.label :終了期限 %>
     <%= form.date_field :deadline %>
