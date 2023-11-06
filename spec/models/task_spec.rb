@@ -20,21 +20,37 @@ RSpec.describe 'タスクモデル機能', type: :model do
       end
     end
   end
-  describe 'scopeのテスト' do
-    context 'タイトルをあいまい検索した場合' do
-      it '該当のタイトルを含むタスクが表示される' do
-        task = Task.create(title: 'title1', content: 'content1', deadline: '2023/12/1', status: 'completed')
-        task = Task.create(title: 'title2', content: 'content2', deadline: '2023/12/10', status: 'working')
-        task = Task.create(title: 'title3', content: 'content3', deadline: '2023/12/20', status: 'waiting')
-        expect(Task.search_title('3')).to include("title3")
+  describe '検索機能' do
+    context 'scopeメソッドでタイトルのあいまい検索をした場合' do
+      it '検索キーワードを含むタスクが絞り込まれる' do
+        task1 = FactoryBot.create(:task, title: 'title1')
+        task2 = FactoryBot.create(:task, title: 'title2')
+        expect(Task.search_title('2')).to include(task2)
+        expect(Task.search_title('2')).not_to include(task1)
+        expect(Task.search_title('2').count).to eq 1
       end
     end
-    context 'ステータスで検索した場合' do
-      it '該当のステータスを含むタスクが表示される' do
+    context 'scopeメソッドでステータスを検索した場合' do
+      it 'ステータスに完全一致するタスクが絞り込まれる' do
+        task1 = FactoryBot.create(:task, status: 'completed')
+        task2 = FactoryBot.create(:task, status: 'working')
+        task3 = FactoryBot.create(:task, status: 'waiting')
+        expect(Task.search_status('completed')).to include(task1)
+        expect(Task.search_status('completed')).not_to include(task2,task3)
+        expect(Task.search_status('completed').count).to eq 1
       end
     end
     context 'タイトルをあいまい検索、ステータスを検索した場合' do
-      it '該当のタイトル・ステータスを含むタスクが表示される' do
+      it '検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる' do
+        task1 = FactoryBot.create(:task, title: 'title1', status: 'completed')
+        task2 = FactoryBot.create(:task, title: 'title2', status: 'working')
+        task3 = FactoryBot.create(:task, title: 'title3', status: 'waiting')
+        expect(Task.search_title('1')).to include(task1)
+        expect(Task.search_status('completed')).to include(task1)
+        expect(Task.search_title('1')).not_to include(task2,task3)
+        expect(Task.search_status('completed')).not_to include(task2,task3)
+        expect(Task.search_title('1').count).to eq 1
+        expect(Task.search_status('completed').count).to eq 1
       end
     end
   end
