@@ -27,7 +27,7 @@
     <tr>
       <td class="task_row_title"><%= task.title %></td>
       <td class="task_row"><%= task.content %></td>
-      <td class="task_row"><%= task.deadline %></td>
+      <td class="task_row_deadline"><%= task.deadline %></td>
       <td class="task_row"><%= task.status %></td>
       <td class="task_row_priority"><%= task.priority %></td>
       <td><%= link_to "詳細", task_path(task.id), class: "btn btn-primary btn-sm" %></td>

@@ -28,20 +28,20 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, title: 'task3')
         visit tasks_path
         task_list = all('.task_row_title')
-        expect(task_list[2]).to have_content 'task3'
+        expect(task_list[0]).to have_content 'task3'
       end
     end
-    # context '終了期限でソートするというリンクを押した場合' do
-    #   it '終了期限の降順に並び替える' do
-    #     FactoryBot.create(:task, deadline: '2023/11/1')
-    #     FactoryBot.create(:task, deadline: '2023/12/1')
-    #     FactoryBot.create(:task, deadline: '2024/1/1')
-    #     visit tasks_path
-    #     click_on '終了期限'
-    #     task_list = all('.task_row')
-    #     expect(task_list[2]).to have_content '2024-01-01'
-    #   end
-    # end
+    context '終了期限でソートするというリンクを押した場合' do
+      it '終了期限の降順に並び替える' do
+        FactoryBot.create(:task, deadline: '2023/11/1')
+        FactoryBot.create(:task, deadline: '2023/12/1')
+        FactoryBot.create(:task, deadline: '2024/1/1')
+        visit tasks_path
+        click_on '終了期限'
+        task_list = all('.task_row_deadline')
+        expect(task_list[0]).to have_content '2024-01-01'
+      end
+    end
     context '優先順位でソートするというリンクを押した場合' do
       it '優先順位を降順で並び替える' do
         FactoryBot.create(:task, priority: 'high')
