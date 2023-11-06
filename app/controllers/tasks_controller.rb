@@ -1,6 +1,22 @@
 class TasksController < ApplicationController
+
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all
+    # タイトル/ステータス検索
+    if params[:task].present?
+      @tasks = @tasks.search_title(params[:task][:title]) if params[:task][:title].present?
+      @tasks = @tasks.search_status(params[:task][:status]) if params[:task][:status].present?
+    end
+    # 終了期限・優先順位でソート
+    if params[:sort_deadline].present?
+      @tasks = @tasks.order(deadline: :desc)
+    elsif params[:sort_priority].present?
+      @tasks = @tasks.order(priority: :asc)
+    else
+      @tasks = @tasks.order(created_at: :desc)
+    end
+    # ページネーション
+    @tasks = @tasks.page(params[:page]).per(5) 
   end
 
   def new
@@ -42,6 +58,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :deadline, :status, :priority)
   end
 end

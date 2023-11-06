@@ -8,10 +8,11 @@ users
 tasks
 | column | type |
 | ---- | ---- |
+| title | text |
 | content | text |
-| deadline | string |
-| priority | string |
-| status | string |
+| deadline | date |
+| priority | integer |
+| status | integer |
 | user_id | bigint |
 
 labels
