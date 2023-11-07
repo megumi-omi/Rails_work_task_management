@@ -16,6 +16,15 @@
     <header class="header">
     <p>Task_Management</p>
     </header>
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>
+
+    <% if logged_in %>
+      <>
+    <% else %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

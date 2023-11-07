@@ -11,5 +11,5 @@
   password = "password"
   User.create!(name: name,
                email: email,
-               password_digest: password,
+               password: password,
                )
