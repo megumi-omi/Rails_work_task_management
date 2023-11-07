@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  
+  skip_before_action :login_required, only: [:new, :create,:show]
+
   def new
   end
 
@@ -8,8 +9,9 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       session[:user_id] = user.id
       redirect_to user_path(user.id)
+      binding.irb
     else
-      flash.now[:danger] = 'ログインに失敗しました'
+      flash[:danger] = 'ログインに失敗しました'
       render :new
     end
   end
