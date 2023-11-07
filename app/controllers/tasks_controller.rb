@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
 
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     # タイトル/ステータス検索
     if params[:task].present?
       @tasks = @tasks.search_title(params[:task][:title]) if params[:task][:title].present?
@@ -25,6 +25,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to tasks_path, notice: "タスクを作成しました"
     else
