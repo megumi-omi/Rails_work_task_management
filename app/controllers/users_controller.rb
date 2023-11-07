@@ -2,17 +2,17 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create,:show]
 
   def new
-    @user = User.new
     if logged_in?
-      redirect_to user_path(@current_user.id)
+      redirect_to user_path(current_user)
     end
+    @user = User.new
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_path(@user.id)
+      redirect_to user_path(@user)
     else
       render :new
     end
@@ -20,7 +20,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    if logged_in?
+    if @user.id == current_user.id
+      render :show
+    else
       redirect_to tasks_path
     end
   end
