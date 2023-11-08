@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+   before_action :user_check
 
   def index
     @users = User.all.includes(:tasks)
@@ -43,7 +44,15 @@ class Admin::UsersController < ApplicationController
     @user.destroy
     flash[:notice] = "ユーザを削除しました"
     redirect_to admin_users_path
-   end
+  end
+ #名前変える
+  def user_check
+    if current_user.admin
+    else 
+      redirect_to tasks_path
+      flash[:danger] = "管理者以外アクセスできません"
+    end
+  end
 
   private
 
