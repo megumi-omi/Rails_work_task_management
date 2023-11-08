@@ -21,6 +21,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @user.id == current_user.id
+      @tasks = @user.tasks
+      @tasks = @tasks.page(params[:page]).per(5) 
       render :show
     else
       redirect_to tasks_path

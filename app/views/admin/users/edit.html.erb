@@ -1,8 +1,7 @@
-<h1>マイページ</h1>
+<h1>ユーザ編集画面</h1>
 
-<p><%= @user.name %></p>
-
-<%= link_to "新規登録", new_task_path, class: "btn btn-info btn-sm" %>
+<p>ユーザ名: <%= @user.name %></p>
+<p>メールアドレス: <%= @user.email %></p>
 
 <table>
   <tr>
@@ -28,5 +27,3 @@
     </tr>
   <% end %>
   </table>
-
-  <%= paginate(@tasks) %>
