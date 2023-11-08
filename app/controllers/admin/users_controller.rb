@@ -1,12 +1,11 @@
 class Admin::UsersController < ApplicationController
 
   def index
-    @users = User.all
+    @users = User.all.includes(:tasks)
   end
 
   def new
     @user = User.new
-    redirect_to new_user_path
   end
 
   def create
@@ -15,6 +14,7 @@ class Admin::UsersController < ApplicationController
       flash[:notice] = "一般ユーザを作成しました"
       redirect_to admin_users_path
     else
+      flash[:danger] = "ユーザ作成に失敗しました"
       render :new
     end
   end
@@ -22,12 +22,11 @@ class Admin::UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     @tasks = @user.tasks
-    binding.irb
   end
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.update!(user_params)
       flash[:notice] = "ユーザ情報を更新しました"
       redirect_to admin_users_path
     else
@@ -41,7 +40,6 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    binding.irb
     @user.destroy
     flash[:notice] = "ユーザを削除しました"
     redirect_to admin_users_path
@@ -50,6 +48,6 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email)
   end
 end

@@ -1,29 +1,11 @@
-<h1>ユーザ編集画面</h1>
+<h1>編集画面</h1>
 
-<p>ユーザ名: <%= @user.name %></p>
-<p>メールアドレス: <%= @user.email %></p>
-
-<table>
-  <tr>
-    <div class="task_table">
-      <th>タスク名</th>
-      <th>詳細</th>
-      <th>終了期限</th>
-      <th>ステータス</th>
-      <th>優先順位</th>
-    </div>
-  </tr>
-  <br>
-  <% @tasks.each do |task| %>
-    <tr>
-      <td class="task_row_title"><%= task.title %></td>
-      <td class="task_row"><%= task.content %></td>
-      <td class="task_row_deadline"><%= task.deadline %></td>
-      <td class="task_row"><%= task.status %></td>
-      <td class="task_row_priority"><%= task.priority %></td>
-      <td><%= link_to "詳細", task_path(task.id), class: "btn btn-primary btn-sm" %></td>
-      <td><%= link_to "編集", edit_task_path(task.id), class:"btn btn-success btn-sm" %></td>
-      <td><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "本当に削除して良いですか？"}, class: "btn btn-danger btn-sm" %></td>
-    </tr>
-  <% end %>
-  </table>
+  <div class="user_edit_label">ユーザ情報
+    <%= form_with(model: [:admin, @user], local: true) do |form| %>
+      <%= form.label :ユーザ名 %>
+      <%= form.text_field :name %>
+      <%= form.label :メールアドレス %>
+      <%= form.text_field :email %>
+    <%= form.submit :"更新" %>
+    <% end %>
+  </div>
