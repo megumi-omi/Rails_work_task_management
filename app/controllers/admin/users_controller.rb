@@ -35,16 +35,10 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    #名前だけ変更
-    @user.update_attribute(:name, params[:user][:name])
-    #emailだけ変更
-    @user.update_attribute(:email, params[:user][:email])
-    @user.update_attribute(:admin, params[:user][:admin])
-    if @user.save
+    if @user.update!(user_params)
       flash[:notice] = "ユーザ情報を更新しました"
       redirect_to admin_users_path
     else
-      binding.irb
       render :edit
     end
   end
@@ -63,6 +57,6 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :admin)
   end
 end
