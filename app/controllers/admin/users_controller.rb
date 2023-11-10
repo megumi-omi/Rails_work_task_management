@@ -35,12 +35,12 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update!(user_params)
+    if @user.update(user_params)
       flash[:notice] = "ユーザ情報を更新しました"
-      redirect_to admin_users_path
     else
-      render :edit
+      flash[:notice] = "ユーザ情報の更新に失敗しました"
     end
+    redirect_to admin_users_path
   end
 
   def show
@@ -49,9 +49,12 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
-    flash[:notice] = "ユーザを削除しました"
-    redirect_to admin_users_path
+    if @user.destroy
+      flash[:notice] = "ユーザを削除しました"
+    else
+      flash[:notice] = "ユーザ削除に失敗しました"
+      redirect_to admin_users_path
+    end
   end
 
   private
