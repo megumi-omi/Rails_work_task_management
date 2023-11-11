@@ -1,8 +1,20 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  before do
+    User.delete_all
+  end
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:task) { FactoryBot.create(:task, user: user) }
+
+
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
+        visit new_session_path
+        fill_in 'Email', with: 'test@example.com'
+        fill_in 'Password', with: 'test_password'
+        click_on 'Log in'
+
         visit new_task_path
         fill_in 'task[title]', with: 'タスク1'
         fill_in 'task[content]', with: '詳細1'
@@ -16,14 +28,11 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        FactoryBot.create(:task, title: 'task')
-        visit tasks_path
-        expect(page).to have_content 'task'
+        expect(page).to have_content 'task1'
       end
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
-        FactoryBot.create(:task, title: 'task1')
         FactoryBot.create(:task, title: 'task2')
         FactoryBot.create(:task, title: 'task3')
         visit tasks_path
@@ -54,6 +63,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end          
   end
+
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
@@ -63,10 +73,10 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
   end
+
   describe '検索機能' do
-    context 'タイトルで検索した場合' do
+      context 'タイトルで検索した場合' do
       it '該当のタイトルを含むタスクが表示される' do
-        FactoryBot.create(:task, title: 'task1')
         FactoryBot.create(:task, title: 'task2')
         FactoryBot.create(:task, title: 'task3')
         visit tasks_path
@@ -77,7 +87,6 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'ステータスで検索した場合' do
       it '該当のステータスに当てはまるタスクが表示される' do
-        FactoryBot.create(:task, status: 'completed')
         FactoryBot.create(:task, status: 'working')
         FactoryBot.create(:task, status: 'waiting')
         visit tasks_path
@@ -88,7 +97,6 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context 'タイトルとステータスで検索した場合' do
       it '該当のタイトルとステータスのタスクが表示される' do
-        FactoryBot.create(:task, title: 'task1', status: 'completed')
         FactoryBot.create(:task, title: 'task2', status: 'working')
         FactoryBot.create(:task, title: 'task3', status: 'waiting')
         visit tasks_path

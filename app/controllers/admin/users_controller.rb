@@ -52,7 +52,7 @@ class Admin::UsersController < ApplicationController
     if @user.destroy
       flash[:notice] = "ユーザを削除しました"
     else
-      flash[:notice] = "ユーザ削除に失敗しました"
+       flash[:notice] = "ユーザ削除に失敗しました"
       redirect_to admin_users_path
     end
   end
@@ -60,6 +60,6 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :admin)
+    params.require(:user).permit(:name, :email, :admin, :password, :password_confirmation)
   end
 end

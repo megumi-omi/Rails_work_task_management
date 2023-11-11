@@ -1,9 +1,10 @@
 FactoryBot.define do
   factory :task do
-    title { 'test_title' }
-    content { 'test_content' }
+    title    { 'test_title' }
+    content  { 'test_content' }
     deadline { 'test_deadline' }
-    status { :waiting }
+    status   { :waiting }
     priority { :low }
   end
+
 end
