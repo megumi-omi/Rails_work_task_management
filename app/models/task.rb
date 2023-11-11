@@ -1,6 +1,8 @@
 class Task < ApplicationRecord
   before_create :set_default_deadline
 
+  belongs_to :user
+
   validates :title, presence: true
   validates :content, presence: true
   

@@ -1,0 +1,13 @@
+<h1>編集画面</h1>
+
+  <div class="user_edit_label">ユーザ情報
+    <%= form_with(model: [:admin, @user], local: true) do |form| %>
+      <%= form.label :ユーザ名 %>
+      <%= form.text_field :name %>
+      <%= form.label :メールアドレス %>
+      <%= form.text_field :email %>
+      <%= form.label :権限 %>
+      <%= form.text_field :admin %>
+    <%= form.submit :"更新" %>
+    <% end %>
+  </div>
