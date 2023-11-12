@@ -1,11 +1,13 @@
 <h1>タスク一覧</h1>
 <p><%= notice %></p>
 
-<%= form_with scope: :task, url: tasks_path, method: :get, local: true do |form| %>
+<%= form_with scope: :search, url: tasks_path, method: :get, local: true do |form| %>
   <%= form.label :タスク名 %>
   <%= form.text_field :title %>
   <%= form.label :ステータス %>
   <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください' }, include_blank: true %>
+  <%= form.label :ラベル %>
+  <%= form.select :label_id, Label.pluck(:name, :id),{ include_blank: '選択してください' }, include_blank: true %>
   <%= form.submit '検索' %>
 <% end %>
 
