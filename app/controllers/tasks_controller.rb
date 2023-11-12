@@ -36,7 +36,6 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    # @labelling = current_user.labellings.find_by(task_id: @task.id) 
   end
 
   def edit

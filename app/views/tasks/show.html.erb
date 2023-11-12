@@ -1,3 +1,19 @@
 <h1>タスク詳細画面</h1>
-<p>タスク名: <%= @task.title %></p>
-<p>詳細: <%= @task.content %></p>
+
+<table>
+  <tr>
+    <th>タスク名</th>
+    <th>詳細</th>
+    <th>ラベル</th>
+  </tr>
+<br>
+  <tr>
+    <td><%= @task.title %></td>
+    <td><%= @task.content %></td>
+    <td>
+      <% @task.labels.each do |label| %>
+        <%= label.name %>
+      <% end %>
+    </td>
+  </tr>
+</table>
