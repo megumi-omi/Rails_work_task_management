@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks
-    # タイトル/ステータス検索
+    # タイトル/ステータス/ラベル検索
     if params[:search].present?
       @tasks = @tasks.search_title(params[:search][:title]) if params[:search][:title].present?
       @tasks = @tasks.search_status(params[:search][:status]) if params[:search][:status].present?
