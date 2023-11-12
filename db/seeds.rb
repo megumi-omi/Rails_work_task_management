@@ -6,21 +6,37 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create!(name: 'user_sample01',
-             email: 'user_sample01@example.com',
-             password: 'password',
-             password_confirmation: 'password',
-            )
+10.times do | n |
+  name = Faker::Name.name
+  email = Faker::Internet.email
+  password = "password"
+  title = Faker::Book.title
+  content = Faker::Book.author
+  status = 'waiting'
+  priority = 'low'
 
-admin_user = User.create!(name: 'admin01',
-                          email: 'admin01@example.com',
+  user = User.create!(name: name,
+              email: email,
+              password: password,
+              password_confirmation: password,
+              )
+  Task.create!(title: title,
+              content: content,
+              status: status,
+              priority: priority,
+              user: user,
+              )
+end
+
+admin_user = User.create!(name: 'admin03',
+                          email: 'admin03@example.com',
                           password: 'password',
                           password_confirmation: 'password',
                           admin: true,
                           )
 
 
-5.times do | n |
-  name = Faker::Types.rb_string
+10.times do | n |
+  name = Faker::Book.publisher
   Label.create!(name: name,)
 end
