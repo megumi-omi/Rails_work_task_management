@@ -30,7 +30,12 @@
     <%= form.label :終了期限 %>
     <%= form.date_field :deadline %>
   </div>
-
+  
+  <%= form.label :ラベル %>
+  <% Label.all.each do |label| %>
+    <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+    <%= label.name %>
+  <% end %>
 
   <%= form.submit %>
 <% end %>
