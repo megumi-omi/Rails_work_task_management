@@ -2,10 +2,11 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks
-    # タイトル/ステータス検索
-    if params[:task].present?
-      @tasks = @tasks.search_title(params[:task][:title]) if params[:task][:title].present?
-      @tasks = @tasks.search_status(params[:task][:status]) if params[:task][:status].present?
+    # タイトル/ステータス/ラベル検索
+    if params[:search].present?
+      @tasks = @tasks.search_title(params[:search][:title]) if params[:search][:title].present?
+      @tasks = @tasks.search_status(params[:search][:status]) if params[:search][:status].present?
+      @tasks = @tasks.joins(:labels).where(labels:{id:params[:search][:label_id]}) if params[:search][:label_id].present?
     end
     # 終了期限・優先順位でソート
     if params[:sort_deadline].present?
@@ -38,7 +39,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id]) 
+    @task = Task.find(params[:id])
   end
 
   def update
@@ -59,6 +60,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status, :priority)
+    params.require(:task).permit(:title, :content, :deadline, :status, :priority, label_ids:[])
   end
 end

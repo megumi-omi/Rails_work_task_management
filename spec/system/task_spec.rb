@@ -19,6 +19,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'task[content]', with: '詳細1'
         fill_in 'task[deadline]', with: DateTime
         select 'waiting', from: 'task[status]'
+        check 'task[label_ids][]' 
         click_on '登録する'
         expect(page).to have_content 'タスク1'       
       end
@@ -52,6 +53,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, deadline: '2024/1/1', user: user)
         visit tasks_path
         click_on '終了期限'
+        sleep(0.5)
         task_list = all('.task_row_deadline')
         expect(task_list[0]).to have_content '2024-01-01'
        end
@@ -63,6 +65,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, priority: 'low', user: user)
         visit tasks_path
         click_on '優先順位'
+        sleep(0.5)
         task_list = all('.task_row_priority')
         expect(task_list[0]).to have_content 'high'
       end
@@ -97,7 +100,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, title: 'task2', user: user)
         FactoryBot.create(:task, title: 'task3', user: user)
         visit tasks_path
-        fill_in 'task[title]', with: 'task3'
+        fill_in 'search[title]', with: 'task3'
         click_on '検索'
         expect(page).to have_content 'task3'
       end
@@ -107,7 +110,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, status: 'working', user: user)
         FactoryBot.create(:task, status: 'waiting', user: user)
         visit tasks_path
-        select 'waiting', from: 'task[status]'
+        select 'waiting', from: 'search[status]'
         click_on '検索'
         expect(page).to have_content 'waiting'
       end
@@ -117,8 +120,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, title: 'task2', status: 'working', user: user)
         FactoryBot.create(:task, title: 'task3', status: 'waiting', user: user)
         visit tasks_path
-        fill_in 'task[title]', with: 'task3'
-        select 'waiting', from: 'task[status]'
+        fill_in 'search[title]', with: 'task3'
+        select 'waiting', from: 'search[status]'
         click_on '検索'
         expect(page).to have_content 'task3'
       end

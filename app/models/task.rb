@@ -2,6 +2,8 @@ class Task < ApplicationRecord
   before_create :set_default_deadline
 
   belongs_to :user
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings, source: :label
 
   validates :title, presence: true
   validates :content, presence: true
